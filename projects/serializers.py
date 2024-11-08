@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Usuario, Roles, Tarea, Sprint, Proyecto, Equipo, UsuarioEquipo, Comentario
+from .models import Usuario, Roles, Tarea, Sprint, Proyecto, EquipoTrabajo, UsuarioEquipo, Comentario
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,7 +36,7 @@ class ProyectoSerializer(serializers.ModelSerializer):
 class EquipoTrabajoSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Equipo
+        model = EquipoTrabajo
         fields = '__all__'
         read_only_fields = ['id']
 
