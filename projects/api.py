@@ -1,4 +1,4 @@
-from .models import Usuario, Roles, Tarea, Sprint, Proyecto, EquipoTrabajo, UsuarioEquipo, Comentario
+from .models import Usuario, Roles, Tarea, Sprint, Proyecto, Equipo	, UsuarioEquipo, Comentario
 from rest_framework import viewsets, permissions
 from .serializers import UserSerializer, RolesSerializer, TareaSerializer, SprintSerializer, ProyectoSerializer, EquipoTrabajoSerializer, UsuarioEquipoSerializer, ComentarioSerializer
 
@@ -28,7 +28,7 @@ class ProyectoViewSet(viewsets.ModelViewSet):
     serializer_class = ProyectoSerializer
 
 class EquipoTrabajoViewSet(viewsets.ModelViewSet):
-    queryset = EquipoTrabajo.objects.all()
+    queryset = Equipo.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = EquipoTrabajoSerializer
 
