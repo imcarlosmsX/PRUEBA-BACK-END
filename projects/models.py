@@ -8,13 +8,35 @@ class Usuario(models.Model):
     def __str__(self):
         return self.nombre
 
-
 class Roles(models.Model):
     nombre_rol = models.CharField(max_length=100)
     descripcion_rol = models.TextField()
 
     def __str__(self):
         return self.nombre_rol
+
+class Equipo(models.Model):
+    nombre_equipo = models.CharField(max_length=255)
+    descripcion_equipo = models.TextField()
+
+    def __str__(self):
+        return self.nombre_equipo
+
+class UsuarioEquipo(models.Model):
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+    rol = models.ForeignKey(Roles, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.usuario.nombre} - {self.equipo.nombre_equipo} - {self.rol.nombre_rol}"
+
+class Proyecto(models.Model):
+    nombre_proyecto = models.CharField(max_length=255)
+    descripcion_proyecto = models.TextField()
+    equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nombre_proyecto
 
 class Tarea(models.Model):
     nombre_tarea = models.CharField(max_length=255)
@@ -27,57 +49,28 @@ class Tarea(models.Model):
     def __str__(self):
         return self.nombre_tarea
 
-
 class Sprint(models.Model):
     nombre_sprint = models.CharField(max_length=255)
     fecha_inicio_sprint = models.DateField()
     fecha_fin_sprint = models.DateField()
     estado_sprint = models.CharField(max_length=50)
-    id_tarea = models.ForeignKey(Tarea, on_delete=models.SET_NULL, null=True)
+    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nombre_sprint
 
-class Proyecto(models.Model):
-    nombre_proyecto = models.CharField(max_length=255)
-    descripcion_proyecto = models.TextField()
-    fecha_inicio_proyecto = models.DateField()
-    fecha_fin_proyecto = models.DateField()
-    estado_proyecto = models.CharField(max_length=50)
-    id_sprint = models.ForeignKey(Sprint, on_delete=models.SET_NULL, null=True)
+class SprintTarea(models.Model):
+    sprint = models.ForeignKey(Sprint, on_delete=models.CASCADE)
+    tarea = models.ForeignKey(Tarea, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.nombre_proyecto
-
-
-class EquipoTrabajo(models.Model):
-    nombre_equipo = models.CharField(max_length=255)
-    descripcion_equipo = models.TextField()
-    rol_id = models.ForeignKey(Roles, on_delete=models.SET_NULL, null=True)
-    id_proyecto = models.ForeignKey(Proyecto, on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return self.nombre_equipo
-
-
-class UsuarioEquipo(models.Model):
-    usuario_equipo_id = models.AutoField(primary_key=True)
-    fecha_union = models.DateField()
-    rol_equipo = models.CharField(max_length=100)
-    id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    id_equipo_trabajo = models.ForeignKey(EquipoTrabajo, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.id_usuario} - {self.id_equipo_trabajo}"
+        return f"{self.sprint.nombre_sprint} - {self.tarea.nombre_tarea}"
 
 class Comentario(models.Model):
-    contenido_comentario = models.TextField()
-    fecha_comentario = models.DateField()
-    id_tarea = models.ForeignKey(Tarea, on_delete=models.CASCADE)
-    id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    tarea = models.ForeignKey(Tarea, on_delete=models.CASCADE)
+    comentario = models.TextField()
+    fecha_comentario = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Comentario by {self.id_usuario} on Tarea {self.id_tarea}"
-
-
-
+        return f"{self.usuario.nombre} - {self.tarea.nombre_tarea} - {self.fecha_comentario}"
