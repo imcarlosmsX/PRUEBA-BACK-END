@@ -20,8 +20,7 @@ class EquipoTrabajo(models.Model):
 class Roles(models.Model):
     nombre_rol = models.CharField(max_length=100)
     descripcion_rol = models.TextField()
-    equipo_trabajo = models.ForeignKey(EquipoTrabajo, on_delete=models.CASCADE, related_name="roles", default=1) 
-
+    equipo_trabajo = models.ForeignKey(EquipoTrabajo, on_delete=models.CASCADE, related_name="roles", default=1)
     def __str__(self):
         return f"{self.nombre_rol} - {self.equipo_trabajo.nombre_equipo}"
 
