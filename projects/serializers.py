@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Usuario, Roles, Tarea, Sprint, Proyecto, EquipoTrabajo, UsuarioEquipo, Comentario
+from .models import Usuario, Roles, Tarea, Sprint, Proyecto, Equipo, UsuarioEquipo, Comentario
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
