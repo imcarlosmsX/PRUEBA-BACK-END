@@ -20,7 +20,7 @@ class EquipoTrabajo(models.Model):
 class Roles(models.Model):
     nombre_rol = models.CharField(max_length=100)
     descripcion_rol = models.TextField()
-    equipo_trabajo = models.ForeignKey(EquipoTrabajo, on_delete=models.CASCADE, related_name="roles", default=None)
+    equipo_trabajo = models.ForeignKey(EquipoTrabajo, on_delete=models.CASCADE, related_name="roles", default=1)
 
     def __str__(self):
         return f"{self.nombre_rol} - {self.equipo_trabajo.nombre_equipo}"
@@ -32,7 +32,7 @@ class Proyecto(models.Model):
     fecha_inicio_proyecto = models.DateField()
     fecha_fin_proyecto = models.DateField()
     estado_proyecto = models.CharField(max_length=50)
-    equipo_trabajo = models.ForeignKey(EquipoTrabajo, on_delete=models.CASCADE, default=None)
+    equipo_trabajo = models.ForeignKey(EquipoTrabajo, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.nombre_proyecto
