@@ -36,7 +36,7 @@ class ProyectoSerializer(serializers.ModelSerializer):
 class EquipoTrabajoSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = EquipoTrabajo
+        model = Equipo
         fields = '__all__'
         read_only_fields = ['id']
 
